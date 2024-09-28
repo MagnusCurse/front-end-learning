@@ -5,9 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .box-one {
+        background-color: aqua;
+        height: 20px;
+        width: 20px;
+    }
+    .box-two {
+        background-color: azure;
+        height: 20px;
+        width: 20px;
+    }
+    .box-three {
+        background-color: bisque;
+        height: 20px;
+        width: 20px;
+    }
+    /* set the style for the directive v-cloack*/
+    [v-cloak] {
+        display: none;
+    }
+</style>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         {{ greeting }}
+        <hr />
+        <div v-if="isVisible_one" class="box-one"></div>
+        <div v-else-if="isVisible_two" class="box-two"></div>
+        <div v-else class="box-three"></div>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -15,7 +40,9 @@
         let app = Vue.createApp({
             data: function() {
                 return {
-                    greeting: 'Hi Vue3, I am Livi'
+                    greeting: 'Hi Vue3, I am Livi',
+                    isVisible_one: false,
+                    isVisible_two: false   
                 }
             }
         })
