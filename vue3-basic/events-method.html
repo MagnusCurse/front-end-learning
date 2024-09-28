@@ -22,6 +22,7 @@
     <div id="app" v-cloak>
         {{ greeting }}
         <hr />
+        <input @keyup.enter="greet(greeting)" v-model="greeting">
         <button @click="toggleBox">toggle box</button>
         <hr />
         <div v-if="isVisible_one" class="box-one"></div>
@@ -39,6 +40,9 @@
             methods: {
                 toggleBox() {
                     this.isVisible_one = !this.isVisible_one
+                },
+                greet(greeting) {
+                    console.log(greeting)
                 }
             }
         })
