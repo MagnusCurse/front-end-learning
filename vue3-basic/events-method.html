@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box-one {
+        background-color: aqua;
+        height: 20px;
+        width: 20px;
+    }
+    
+    /* set the style for the directive v-cloack*/
+    [v-cloak] {
+        display: none;
+    }
+</style>
+<body>
+    <!-- v-cloak make sure the three box will not display when v-if is not working -->
+    <div id="app" v-cloak>
+        {{ greeting }}
+        <hr />
+        <button @click="toggleBox">toggle box</button>
+        <hr />
+        <div v-if="isVisible_one" class="box-one"></div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function() {
+                return {
+                    greeting: 'Hi Vue3, I am Livi',
+                    isVisible_one: true,
+                }
+            },
+            methods: {
+                toggleBox() {
+                    this.isVisible_one = !this.isVisible_one
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
