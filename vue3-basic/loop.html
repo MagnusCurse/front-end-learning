@@ -1,0 +1,116 @@
+<!--
+Here you learn
+1.the use of the loop
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box-one {
+        background-color: aqua;
+        height: 20px;
+        width: 20px;
+    }
+    
+    /* set the style for the directive v-cloack*/
+    [v-cloak] {
+        display: none;
+    }
+
+    input {
+        margin: 10px;
+    }
+</style>
+<body>
+    <!-- v-cloak make sure the three box will not display when v-if is not working -->
+    <div id="app" v-cloak>
+        {{ greeting }}
+        <hr />
+        <login-form />
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function() {
+                return {
+                    greeting: 'Hi Vue3, I am Livi',
+                }
+            }
+        })
+
+        // the logon component
+        app.component('login-form', {
+            // v-model actually input the props called modelValue, is the same as :modelValue
+            // so in the child component you can get the modelValue through props
+            template: `
+                <form @submit.prevent="handleSubmit">
+                    <h1> {{ title }} </h1>
+                    <custom-input 
+                        v-for="(input, index) in inputs"
+                        :key="index"
+                        v-model="input.value"
+                        :label="input.label"
+                        :type="input.type"
+                    />
+                    <button> Log in </button>
+                </form>
+            `,
+            components: ['custom-input'],
+            data() {
+                return {
+                    title: 'Login Form',
+                    inputs: [
+                        {
+                            label: 'Email',
+                            value: '',
+                            type: 'email'
+                        },
+                        {
+                            label: 'Password',
+                            value: '',
+                            type: 'Password'
+                        }
+                    ]
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    console.log(this.inputs[0].value);
+                    console.log(this.inputs[1].value);
+                }
+            }
+        })
+
+        // the custom input component
+        app.component('custom-input', {
+            template: `
+                <label>
+                    {{ label }}
+                    <input type="text" v-model="inputValue">
+                </label>`,
+                props: ['label', 'modelValue', 'type'],
+                // this computed is for update the value of the parent component email and password
+                computed: {
+                    inputValue: {
+                        get() {
+                            // console.log('get methoud has been called');
+                            return this.modelValue;
+                        },
+                        set(value) {
+                            // console.log('set methoud has been called');
+                            // update is a event from the vue3
+                            this.$emit("update:modelValue", value);
+                        }
+                    }
+                }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
