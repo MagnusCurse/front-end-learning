@@ -1,3 +1,11 @@
+<!--
+Here you can learn:
+1.the use of the props, to pass the arguments from parents component to child component
+2.the use of computed
+3.the use of v-model, the same as v-bind:modelValue or :modelValue
+4.the use of get() and set() method, and how to change the value of parent component in child component
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,11 +49,13 @@
 
         // the logon component
         app.component('login-form', {
+            // v-model actually input the props called modelValue, is the same as :modelValue
+            // so in the child component you can get the modelValue through props
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h1> {{ title }} </h1>
+                    <custom-input type="password" v-model="password" :label="emailLabel"/>
                     <custom-input type="email" v-model="email" :label="passwordLabel"/>
-                    <custom-input type="password" v-modle="password" :label="emailLabel"/>
                     <button> Log in </button>
                 </form>
             `,
@@ -72,9 +82,23 @@
             template: `
                 <label>
                     {{ label }}
-                    <input type="text">
+                    <input type="text" v-model="inputValue">
                 </label>`,
-                props: ['label']
+                props: ['label', 'modelValue'],
+                // this computed is for update the value of the parent component email and password
+                computed: {
+                    inputValue: {
+                        get() {
+                            // console.log('get methoud has been called');
+                            return this.modelValue;
+                        },
+                        set(value) {
+                            // console.log('set methoud has been called');
+                            // update is a event from the vue3
+                            this.$emit("update:modelValue", value);
+                        }
+                    }
+                }
         })
         app.mount('#app')
     </script>
