@@ -27,7 +27,6 @@
         {{ greeting }}
         <hr />
         <login-form />
-
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -40,20 +39,24 @@
             }
         })
 
+        // the logon component
         app.component('login-form', {
             template: `
                 <form @submit.prevent="handleSubmit">
                     <h1> {{ title }} </h1>
-                    <input type="email" v-model="email">
-                    <input type="password" v-modle="password">
+                    <custom-input type="email" v-model="email" :label="passwordLabel"/>
+                    <custom-input type="password" v-modle="password" :label="emailLabel"/>
                     <button> Log in </button>
                 </form>
             `,
+            components: ['custom-input'],
             data() {
                 return {
                     title: 'Login Form',
                     email: '',
-                    password: ''
+                    password: '',
+                    emailLabel: 'Email',
+                    passwordLabel: 'Password'
                 }
             },
             methods: {
@@ -62,6 +65,16 @@
                     console.log(this.password) 
                 }
             }
+        })
+
+        // the custom input component
+        app.component('custom-input', {
+            template: `
+                <label>
+                    {{ label }}
+                    <input type="text">
+                </label>`,
+                props: ['label']
         })
         app.mount('#app')
     </script>
