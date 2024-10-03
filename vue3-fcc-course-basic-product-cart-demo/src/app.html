@@ -201,6 +201,9 @@
         computed: {
           totalPrice() {
             return (this.cart.carrots * 4.82).toFixed(2)
+          },
+          cartTotal() {
+            return (this.cart.carrots * 4.82).toFixed(2)
           }
         },
         template: `
@@ -218,7 +221,7 @@
                       <table class="cart-table">
                         <thead>
                           <tr>
-                            <th><span class="sr-only">Product Image</span></th>
+                            <th><span class=sr-only> Product Image </span></th>
                             <th>Product</th>
                             <th>Price</th>
                             <th>Qty</th>
@@ -252,7 +255,7 @@
                       <p class="center"><em>No items in cart</em></p>
                       <div class="spread">
                         <!-- the price of the carrots -->
-                        <span><strong>Total:</strong> \$ {{ totalPrice }} </span>
+                        <span><strong>Total:</strong> \$ {{ cartTotal }} </span>
                         <button class="btn btn-light">Checkout</button>
                       </div>
                     </div>
