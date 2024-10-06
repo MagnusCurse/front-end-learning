@@ -145,6 +145,16 @@
           },
           getTotalPrice(quantity, name) {
             return (this.getPrice(name) * quantity).toFixed(2)
+          },
+          getCartTotal() {
+            if(Object.keys(this.cart).length == 0) {
+              return 0
+            }
+            const names = Object.keys(this.cart)
+            const cartTotal = Object.values(this.cart).reduce((acc, cur, index) => {
+              return acc + (cur * this.getPrice(names[index]))
+            })
+            return cartTotal
           }
         },
         template: `
@@ -198,7 +208,7 @@
                       <p class="center"><em>No items in cart</em></p>
                       <div class="spread">
                         <!-- the price of the carrots -->
-                        <span><strong>Total:</strong> \$ {{ cartTotal }} </span>
+                        <span><strong>Total:</strong> \$ {{ getCartTotal() }} </span>
                         <button class="btn btn-light">Checkout</button>
                       </div>
                     </div>
