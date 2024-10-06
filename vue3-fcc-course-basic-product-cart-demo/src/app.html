@@ -142,6 +142,9 @@
               return p.name == name
             })
             return product.price.USD
+          },
+          getTotalPrice(quantity, name) {
+            return (this.getPrice(name) * quantity).toFixed(2)
           }
         },
         template: `
@@ -181,7 +184,7 @@
                             <td class="center"> {{ quantity }} </td>
 
                             <!-- the total price of the items -->
-                            <td>  </td>
+                            <td> \${{ getTotalPrice(quantity, key) }}  </td>
 
                             <td class="center">
                               <button class="btn btn-light cart-remove">
