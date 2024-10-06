@@ -154,7 +154,7 @@
             const cartTotal = Object.values(this.cart).reduce((acc, cur, index) => {
               return acc + (cur * this.getPrice(names[index]))
             })
-            return cartTotal
+            return cartTotal.toFixed(2)
           }
         },
         template: `
@@ -205,7 +205,7 @@
                         </tbody>
                       </table>
 
-                      <p class="center"><em>No items in cart</em></p>
+                      <p class="center" v-if="!Object.keys(cart).length"><em>No items in cart</em></p>
                       <div class="spread">
                         <!-- the price of the carrots -->
                         <span><strong>Total:</strong> \$ {{ getCartTotal() }} </span>
