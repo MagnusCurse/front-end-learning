@@ -81,7 +81,10 @@
 
           
           <!-- the sidebar of the cart  -->
-          <side-bar v-if="showSideBar" :toggle="toggleSideBar" :cart="cart"/>
+          <side-bar v-if="showSideBar" 
+          :toggle="toggleSideBar" 
+          :cart="cart"
+          :inventory="inventory"/>
 
         </div>
 
@@ -101,7 +104,7 @@
             showSideBar: false,
             inventory: [],
             cart: {
-              
+
             }
           }
         },
@@ -111,7 +114,6 @@
               this.cart[name] = 0;
             }
             this.cart[name] += this.inventory[index].quantity; // increase the quantity of the cart according to the type
-            console.log(this.cart[name]);
           },
           toggleSideBar() {
             this.showSideBar = !this.showSideBar;
@@ -127,13 +129,19 @@
       
 
       app.component('side-bar', {
-        props: ['toggle', 'cart'],
+        props: ['toggle', 'cart', 'inventory'],
         computed: {
-          totalPrice() {
-            return (this.cart.carrots * 4.82).toFixed(2)
-          },
           cartTotal() {
             return (this.cart.carrots * 4.82).toFixed(2)
+          }
+        },
+        methods: {
+          getPrice(name) {
+            
+            const product = this.inventory.find((p) => {
+              return p.name = name
+            })
+            return product.price.USD
           }
         },
         template: `
@@ -160,18 +168,20 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          <tr v-for="(quantity, key, i) in cart" :key="i">
                             <td><i class="icofont-carrot icofont-3x"></i></td>
-                            <td>Carrot</td>
-                            <!-- the price of the carrots -->
-                            <td>$4.82</td>
-                            <!-- the quantity of the carrots -->
-                            <td class="center"> {{ cart.carrots }} </td>
+                            <td> {{ key }} </td>
 
-                            <!-- the total of the carrots -->
+                            <!-- the price of the items -->
                             <!-- The backslash (\) is used to escape special characters in many languages and frameworks. Without it, 
-                              the $ might be misinterpreted as a syntax element. -->
-                            <td> \${{ totalPrice }} </td>
+                            the $ might be misinterpreted as a syntax element. -->
+                            <td>  \${{ getPrice(key) }}  </td>
+
+                            <!-- the quantity of the items -->
+                            <td class="center"> {{ quantity }} </td>
+
+                            <!-- the total price of the items -->
+                            <td>  </td>
 
                             <td class="center">
                               <button class="btn btn-light cart-remove">
