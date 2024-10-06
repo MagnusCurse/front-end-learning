@@ -85,6 +85,7 @@
           :toggle="toggleSideBar" 
           :inventory="inventory"
           :cart="cart"
+          :remove="removeItem"
           />
 
         </div>
@@ -118,6 +119,10 @@
           },
           toggleSideBar() {
             this.showSideBar = !this.showSideBar;
+          },
+          // remove the item from the cart
+          removeItem(name) {
+            delete this.cart[name]
           }
         },
         async mounted() {
@@ -130,7 +135,7 @@
       
 
       app.component('side-bar', {
-        props: ['toggle', 'cart', 'inventory'],
+        props: ['toggle', 'cart', 'inventory', 'remove'],
         computed: {
           cartTotal() {
             return (this.cart.carrots * 4.82).toFixed(2)
@@ -197,7 +202,7 @@
                             <td> \${{ getTotalPrice(quantity, key) }}  </td>
 
                             <td class="center">
-                              <button class="btn btn-light cart-remove">
+                              <button class="btn btn-light cart-remove" @click="remove(key)">
                                 &times;
                               </button>
                             </td>
