@@ -83,8 +83,9 @@
           <!-- the sidebar of the cart  -->
           <side-bar v-if="showSideBar" 
           :toggle="toggleSideBar" 
+          :inventory="inventory"
           :cart="cart"
-          :inventory="inventory"/>
+          />
 
         </div>
 
@@ -137,9 +138,8 @@
         },
         methods: {
           getPrice(name) {
-            
             const product = this.inventory.find((p) => {
-              return p.name = name
+              return p.name == name
             })
             return product.price.USD
           }
