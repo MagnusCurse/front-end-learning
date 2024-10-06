@@ -25,7 +25,7 @@
         </nav>
         <a @click="toggleSideBar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart (0)</span>
+          <span>Cart ( {{ cartItemsQuantity() }} )</span>
         </a>
       </header>
 
@@ -123,6 +123,16 @@
           // remove the item from the cart
           removeItem(name) {
             delete this.cart[name]
+          },
+          // get the current item quantity of the cart 
+          cartItemsQuantity() {
+            if(Object.keys(this.cart).length == 0) {
+              return 0
+            }
+            const cartQuantity = Object.values(this.cart).reduce((acc, cur) => {
+              return acc + cur
+            })
+            return cartQuantity
           }
         },
         async mounted() {
