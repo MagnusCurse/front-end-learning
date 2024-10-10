@@ -47,16 +47,6 @@
             <button class="btn btn-light" @click="addToCart(product.name, i)">Add to cart</button>
           </div>
         </div>
-
-        
-        <!-- the sidebar of the cart  -->
-        <side-bar v-if="showSideBar" 
-        :toggle="toggleSideBar" 
-        :inventory="inventory"
-        :cart="cart"
-        :remove="removeItem"
-        />
-
       </div>
     </main>
   </div>
@@ -66,15 +56,10 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
-import food from '../food.json'
 
 export default {
   name: 'HomeView',
-  data() {
-    return {
-      inventory: food
-    }
-  },
+  props: ['inventory', 'addToCart'],
   components: {
     HelloWorld
   }

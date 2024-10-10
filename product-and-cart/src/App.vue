@@ -15,14 +15,71 @@
       </router-link>
     </nav>
 
-    <!-- <router-link @click="toggleSideBar" class="top-bar-cart-link">
+    <div @click="toggleSideBar" class="top-bar-cart-link">
       <i class="icofont-cart-alt icofont-1x"></i>
       <span>Cart ( {{ cartItemsQuantity() }} )</span>
-    </router-link> -->
+    </div>
 
   </header>
-  <router-view/>
+  <!-- show the component according to the route, the default route is HomeWorld.vue component -->
+  <router-view :inventory="inventory" :addToCart="addToCart" />
+  <Sidebar v-if="showSideBar"
+    :toggle="toggleSideBar" 
+    :inventory="inventory"
+    :cart="cart"
+    :remove="removeItem"
+  />
+
+
 </template>
+
+<script>
+import Sidebar from '@/components/Sidebar.vue'
+import food from './food.json'
+
+export default {
+  components: {
+    Sidebar
+  },
+  data: function() {
+    return {
+      showSideBar: false,
+      inventory: food,
+      cart: {
+
+      }
+    }
+  },
+  methods: {
+    addToCart(name, index) {
+      if(!this.cart[name]) {
+        this.cart[name] = 0;
+      }
+      this.cart[name] += this.inventory[index].quantity; // increase the quantity of the cart according to the type
+    },
+    toggleSideBar() {
+      this.showSideBar = !this.showSideBar;
+    },
+    // remove the item from the cart
+    removeItem(name) {
+      delete this.cart[name]
+    },
+    // get the current item quantity of the cart 
+    cartItemsQuantity() {
+      if(Object.keys(this.cart).length == 0) {
+        return 0
+      }
+      const cartQuantity = Object.values(this.cart).reduce((acc, cur) => {
+        return acc + cur
+      })
+      return cartQuantity
+    }
+  }
+}
+
+
+
+</script>
 
 <style>
 #app {
