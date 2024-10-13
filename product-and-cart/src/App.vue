@@ -51,11 +51,11 @@ export default {
     }
   },
   methods: {
-    addToCart(name, index) {
+    addToCart(name, quantity) {
       if(!this.cart[name]) {
         this.cart[name] = 0;
       }
-      this.cart[name] += this.inventory[index].quantity; // increase the quantity of the cart according to the type
+      this.cart[name] += quantity; // increase the quantity of the cart according to the type
     },
     toggleSideBar() {
       this.showSideBar = !this.showSideBar;

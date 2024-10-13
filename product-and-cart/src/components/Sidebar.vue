@@ -76,11 +76,11 @@ export default {
             }
             const names = Object.keys(this.cart)
             const cartTotal = Object.values(this.cart).reduce((acc, cur, index) => {
-                console.log("acc:" + acc)
-                console.log("cur:" + cur)
-                console.log("index:" + index)
-                console.log("price:" + this.getPrice(names[index]))
-                console.log(acc + (cur * this.getPrice(names[index])))
+                // console.log("acc:" + acc)
+                // console.log("cur:" + cur)
+                // console.log("index:" + index)
+                // console.log("price:" + this.getPrice(names[index]))
+                // console.log(acc + (cur * this.getPrice(names[index])))
                 return acc + (cur * this.getPrice(names[index]))
             }, 0) // don't forget the initial value
             return cartTotal.toFixed(2)
