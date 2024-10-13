@@ -6,7 +6,9 @@
         <span>Home</span>
       </router-link>
       <!-- router products -->
-      <router-link to="/products" class="top-bar-link">
+      <router-link to="/products" class="top-bar-link" 
+        :inventory="inventory"
+        :addToCart="addToCart">
         <span>Products</span>
       </router-link>
       <!-- router past-orders -->
